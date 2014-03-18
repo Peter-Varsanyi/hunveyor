@@ -7,7 +7,7 @@ public class HunveyorService {
 
 	private static final int WRONG_TEMP_VALUE = -60;
 	private static final int MAX_TRIES = 5;
-	private Analog1 analog1;
+	private final Analog1 analog1;
 	public HunveyorService() {
 		analog1 = Analog1.getInstance();
 	}
