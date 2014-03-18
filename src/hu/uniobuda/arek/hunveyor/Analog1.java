@@ -1,14 +1,6 @@
 package hu.uniobuda.arek.hunveyor;
 
-import com.pi4j.io.i2c.I2CBus;
-import com.pi4j.io.i2c.I2CDevice;
-import com.pi4j.io.i2c.I2CFactory;
-
-import java.io.IOException;
-import java.util.Properties;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import hu.uniobuda.arek.hunveyor.propertyreader.HunveyorProperty;
 
 /**
  * Created by gwelican on 2014.02.03..
@@ -42,36 +34,28 @@ public class Analog1 {
 	}
 
 	private Analog1() {
-		
-		final Properties properties = new Properties();
 
-		try {
-			properties.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("res/i2c.properties"));
-		} catch (IOException e) {
-			HunLogger.logger.error("Could not parse the property file");
-		}
-		analog1aI2cAddress = Integer.parseInt(properties.getProperty("analog1a.address"));
-		analog1bI2cAddress = Integer.parseInt(properties.getProperty("analog1b.address"));
+		analog1aI2cAddress = Integer.parseInt(HunveyorProperty.getProperty("analog1a.address"));
+		analog1bI2cAddress = Integer.parseInt(HunveyorProperty.getProperty("analog1b.address"));
 
-		dustOffCommand = Integer.parseInt(properties.getProperty("analog1.dust.off"));
-		dustOnCommand = Integer.parseInt(properties.getProperty("analog1.dust.on"));
-		pressureOffCommand = Integer.parseInt(properties.getProperty("analog1.pressure.off"));
-		pressureOnCommand = Integer.parseInt(properties.getProperty("analog1.pressure.on"));
-		gasOffCommand = Integer.parseInt(properties.getProperty("analog1.gas.off"));
-		gasOnCommand = Integer.parseInt(properties.getProperty("analog1.gas.on"));
+		dustOffCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.dust.off"));
+		dustOnCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.dust.on"));
+		pressureOffCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.pressure.off"));
+		pressureOnCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.pressure.on"));
+		gasOffCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.gas.off"));
+		gasOnCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.gas.on"));
 
-		noiseCommand = Integer.parseInt(properties.getProperty("analog1.getnoise"));
-		readRedCommand = Integer.parseInt(properties.getProperty("analog1.getred"));
-		readYellowCommand = Integer.parseInt(properties.getProperty("analog1.getyellow"));
-		readGreenCommand = Integer.parseInt(properties.getProperty("analog1.getgreen"));
-		readUVCommand = Integer.parseInt(properties.getProperty("analog1.getuv"));
-		readHumidityCommand = Integer.parseInt(properties.getProperty("analog1.gethumidity"));
-		readPressureCommand = Integer.parseInt(properties.getProperty("analog1.getpressure"));
-		readGasCommand = Integer.parseInt(properties.getProperty("analog1.getgas"));
-		readLightCommand = Integer.parseInt(properties.getProperty("analog1.getlight"));
+		noiseCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getnoise"));
+		readRedCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getred"));
+		readYellowCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getyellow"));
+		readGreenCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getgreen"));
+		readUVCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getuv"));
+		readHumidityCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.gethumidity"));
+		readPressureCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getpressure"));
+		readGasCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getgas"));
+		readLightCommand = Integer.parseInt(HunveyorProperty.getProperty("analog1.getlight"));
 
 	}
-
 
 	public float readNoise() {
 		return HunveyorI2C.ReadI2CData(analog1aI2cAddress, noiseCommand);

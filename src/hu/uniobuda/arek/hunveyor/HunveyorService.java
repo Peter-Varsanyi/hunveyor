@@ -2,29 +2,25 @@ package hu.uniobuda.arek.hunveyor;
 
 import javax.jws.WebService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 @WebService(serviceName = "Hunveyor")
 public class HunveyorService {
 
-	Analog1 analog1;
-	private final Logger logger;
-
+	private static final int WRONG_TEMP_VALUE = -60;
+	private static final int MAX_TRIES = 5;
+	private Analog1 analog1;
 	public HunveyorService() {
 		analog1 = Analog1.getInstance();
-		logger = LoggerFactory.getLogger(HunveyorService.class);
 	}
 
-	public void moveCamera(int cam, int direction, int degree) {
+	public void moveCamera(final int cam, final int direction, final int degree) {
 		try {
 			ParallelPort.moveMotor(cam, direction, degree);
-		} catch (Exception e) {
-			logger.info("Exception: " + e);
+		} catch (InterruptedException e) {
+			HunLogger.logger.info("Exception: " + e);
 		}
 	}
 
-	public String screenshot(int num) {
+	public String screenshot(final int num) {
 		return Camera.Screenshot(num);
 	}
 
@@ -84,21 +80,21 @@ public class HunveyorService {
 		return analog1.readRed();
 	}
 
-	public void setPressure(boolean status) {
+	public void setPressure(final boolean status) {
 		analog1.setPressure(status);
 	}
 
-	public void setDust(boolean status) {
+	public void setDust(final boolean status) {
 		analog1.setDust(status);
 	}
 
-	public void setGas(boolean status) {
+	public void setGas(final boolean status) {
 		analog1.setGas(status);
 	}
 
-	public float getTemperature(int address) {
-		float temp = -60;
-		for (int tries = 0; tries < 5 && temp == -60; tries++) {
+	public float getTemperature(final int address) {
+		float temp = WRONG_TEMP_VALUE;
+		for (int tries = 0; tries < MAX_TRIES && temp == WRONG_TEMP_VALUE; tries++) {
 			temp = Temperature.ReadTemperature(address);
 		}
 

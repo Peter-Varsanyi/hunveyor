@@ -1,4 +1,8 @@
-package hu.uniobuda.arek.hunveyor;
+package hu.uniobuda.arek.hunveyor.main;
+
+import hu.uniobuda.arek.hunveyor.Analog1;
+import hu.uniobuda.arek.hunveyor.HunveyorService;
+import hu.uniobuda.arek.hunveyor.ParallelPort;
 
 import javax.xml.ws.Endpoint;
 

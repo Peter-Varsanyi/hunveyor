@@ -1,5 +1,7 @@
 package hu.uniobuda.arek.hunveyor;
 
+import hu.uniobuda.arek.hunveyor.Base64.Base64;
+
 import java.awt.Dimension;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
