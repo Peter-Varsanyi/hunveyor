@@ -2,97 +2,106 @@ package hu.uniobuda.arek.hunveyor;
 
 import javax.jws.WebService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @WebService(serviceName = "Hunveyor")
 public class HunveyorService {
 
 	Analog1 analog1;
+	private final Logger logger;
+
 	public HunveyorService() {
 		analog1 = Analog1.getInstance();
+		logger = LoggerFactory.getLogger(HunveyorService.class);
 	}
-	public void MoveCamera(int cam, int direction, int degree) {
+
+	public void moveCamera(int cam, int direction, int degree) {
 		try {
-			ParallelPort.MoveMotor(cam, direction, degree);
+			ParallelPort.moveMotor(cam, direction, degree);
 		} catch (Exception e) {
-			// pass
+			logger.info("Exception: " + e);
 		}
 	}
 
-	public String Screenshot(int num) {
+	public String screenshot(int num) {
 		return Camera.Screenshot(num);
 	}
 
-	public String Hello() {
+	public String hello() {
 		return "works";
 	}
 
-	public float GetSound() {
-		return analog1.ReadNoise();
+	public float getSound() {
+		return analog1.readNoise();
 	}
 
-	public void MoveUp() {
+	public void moveUp() {
 	}
 
-	public void MoveDown() {
+	public void moveDown() {
 	}
 
-	public float GetGas() {
-		return analog1.ReadGas();
+	public float getGas() {
+		return analog1.readGas();
 	}
 
-	public void LedOn() {
-		ParallelPort.Led(true);
-		ParallelPort.Led(true);
+	public void ledOn() {
+		ParallelPort.setLed(true);
+		ParallelPort.setLed(true);
 	}
 
-	public void LedOff() {
-		ParallelPort.Led(false);
-		ParallelPort.Led(false);
+	public void ledOff() {
+		ParallelPort.setLed(false);
+		ParallelPort.setLed(false);
 	}
 
-	public float GetLight() {
-		return analog1.ReadLight();
+	public float getLight() {
+		return analog1.readLight();
 	}
 
-	public float GetHumidity() {
+	public float getHumidity() {
 		return analog1.readHumidity();
 	}
 
-	public float GetPressure() {
+	public float getPressure() {
 		return analog1.readPressure();
 	}
 
-	public float GetUV() {
+	public float getUV() {
 		return analog1.readUV();
 	}
 
-	public float GetGreen() {
-		return analog1.ReadGreen();
+	public float getGreen() {
+		return analog1.readGreen();
 	}
 
-	public float GetYellow() {
-		return analog1.ReadYellow();
+	public float getYellow() {
+		return analog1.readYellow();
 	}
 
-	public float GetRed() {
-		return analog1.ReadRed();
+	public float getRed() {
+		return analog1.readRed();
 	}
 
-	public void SetPressure(boolean status) {
-		analog1.SwitchPressure(status);
+	public void setPressure(boolean status) {
+		analog1.setPressure(status);
 	}
 
-	public void SetDust(boolean status) {
-		analog1.SwitchDust(status);
+	public void setDust(boolean status) {
+		analog1.setDust(status);
 	}
 
-	public void SetGas(boolean status) {
-		analog1.SwitchGas(status);
+	public void setGas(boolean status) {
+		analog1.setGas(status);
 	}
 
-	public float GetTemperature(int address) {
+	public float getTemperature(int address) {
 		float temp = -60;
-		for (int tries = 0; tries < 5 && temp == -60; tries++)
+		for (int tries = 0; tries < 5 && temp == -60; tries++) {
 			temp = Temperature.ReadTemperature(address);
+		}
+
 		return temp;
 	}
 }
